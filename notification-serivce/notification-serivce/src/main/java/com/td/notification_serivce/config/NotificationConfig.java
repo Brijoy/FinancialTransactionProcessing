@@ -1,5 +1,6 @@
 package com.td.notification_serivce.config;
 
+import jakarta.mail.MessagingException;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -17,7 +18,7 @@ public class NotificationConfig {
     @Value("${notification.email.recipient}")
     private String emailRecipient;
 
-    @Value("${notification.sms.sender}")
+    /*@Value("${notification.sms.sender}")
     private String smsSender;
 
     @Value("${notification.sms.recipient}")
@@ -27,19 +28,27 @@ public class NotificationConfig {
     private String pushNotificationSender;
 
     @Value("${notification.push-notification.recipient}")
-    private String pushNotificationRecipient;
+    private String pushNotificationRecipient;*/
 
     @Bean
-    public JavaMailSender javaMailSender() {
+    public JavaMailSender javaMailSender() throws MessagingException {
         JavaMailSenderImpl mailSender = new JavaMailSenderImpl();
         mailSender.setHost("smtp.gmail.com");
         mailSender.setPort(587);
         mailSender.setUsername(emailSender);
-        mailSender.setPassword("Notification@123");
-        Properties props = mailSender.getJavaMailProperties();
-        props.put("mail.transport.protocol", "smtp");
+        //mailSender.setPassword("Notification@1234");
+        mailSender.setPassword("2456 9920");
+
+        Properties props = new Properties();
+                // mailSender.getJavaMailProperties();
+
+
+        //props.put("mail.transport.protocol", "smtp");
         props.put("mail.smtp.auth", "true");
         props.put("mail.smtp.starttls.enable", "true");
+
+        mailSender.setJavaMailProperties(props);
+
         return mailSender;
     }
 
