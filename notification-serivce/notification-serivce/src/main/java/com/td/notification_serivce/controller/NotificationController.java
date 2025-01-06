@@ -1,5 +1,6 @@
 package com.td.notification_serivce.controller;
 
+import com.td.notification_serivce.dto.MailNotificationRequest;
 import com.td.notification_serivce.dto.NotificationDTO;
 import com.td.notification_serivce.service.NotificationService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -42,6 +43,13 @@ public class NotificationController {
         notificationService.deleteNotification(id);
         return ResponseEntity.noContent().build();
     }
+
+    @PostMapping("/mail")
+    public ResponseEntity<String> sendMailNotification(@RequestBody MailNotificationRequest request) {
+        notificationService.sendNotification(request.getTo(), request.getSubject(), request.getBody());
+        return ResponseEntity.ok("Mail notification sent successfully");
+    }
+
 
 
 

@@ -2,6 +2,7 @@ package com.td.notification_serivce.controller;
 
 import com.td.notification_serivce.dto.UserDTO;
 import com.td.notification_serivce.service.UserService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -22,7 +23,7 @@ public class UserController {
     }
 
     @PostMapping
-    public ResponseEntity<UserDTO> createUser(@RequestBody UserDTO userDTO) {
+    public ResponseEntity<UserDTO> createUser(@Valid @RequestBody UserDTO userDTO) {
         UserDTO createdUserDTO = userService.createUser(userDTO);
         return ResponseEntity.ok(createdUserDTO);
     }

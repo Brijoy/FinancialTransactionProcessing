@@ -7,6 +7,7 @@ public interface NotificationService {
     public void deleteNotification(Long id) ;
     public NotificationDTO getNotificationById(Long id);
     public NotificationDTO updateNotification(NotificationDTO notificationDTO);
+    public void sendNotification(String to, String subject, String body);
 
 
 
