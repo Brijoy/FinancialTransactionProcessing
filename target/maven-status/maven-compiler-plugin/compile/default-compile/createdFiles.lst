@@ -1,8 +1,0 @@
-com\td\TransactionSerivceApplication.class
-com\td\controller\FraudController.class
-com\td\exception\FraudException.class
-com\td\repository\FraudRepository.class
-com\td\dto\CardDetailsDTO.class
-com\td\dto\OTPValidationDTO.class
-com\td\entity\CardDetails.class
-com\td\service\FraudService.class
