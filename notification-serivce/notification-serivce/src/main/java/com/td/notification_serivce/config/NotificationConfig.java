@@ -18,6 +18,9 @@ public class NotificationConfig {
     @Value("${notification.email.recipient}")
     private String emailRecipient;
 
+    @Value("${notification.email.password}")
+    private String emailPassword;
+
     /*@Value("${notification.sms.sender}")
     private String smsSender;
 
@@ -33,11 +36,14 @@ public class NotificationConfig {
     @Bean
     public JavaMailSender javaMailSender() throws MessagingException {
         JavaMailSenderImpl mailSender = new JavaMailSenderImpl();
-        mailSender.setHost("smtp.gmail.com");
-        mailSender.setPort(587);
+        //mailSender.setHost("smtp.gmail.com");
+        //mailSender.setPort(587);
+        mailSender.setHost("sandbox.smtp.mailtrap.io");
+        mailSender.setPort(2525);
         mailSender.setUsername(emailSender);
         //mailSender.setPassword("Notification@1234");
-        mailSender.setPassword("2456 9920");
+        //mailSender.setPassword("2456 9920");
+        mailSender.setPassword(emailPassword);
 
         Properties props = new Properties();
                 // mailSender.getJavaMailProperties();

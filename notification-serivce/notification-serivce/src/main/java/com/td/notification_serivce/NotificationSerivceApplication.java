@@ -25,10 +25,10 @@ public class NotificationSerivceApplication {
 		Properties props = new Properties();
 		props.put(ProducerConfig.CLIENT_ID_CONFIG, KafkaConfigs.applicationID);
 		props.put(ProducerConfig.BOOTSTRAP_SERVERS_CONFIG, KafkaConfigs.bootstrapServers);
-		props.put(ProducerConfig.KEY_SERIALIZER_CLASS_CONFIG, KafkaConfigs.class.getName());
-		props.put(ProducerConfig.VALUE_SERIALIZER_CLASS_CONFIG, KafkaConfigs.class.getName());
-		/*props.put(ProducerConfig.KEY_SERIALIZER_CLASS_CONFIG, StringSerializer.class);
-		props.put(ProducerConfig.VALUE_SERIALIZER_CLASS_CONFIG, JsonSerializer.class);*/
+		/*props.put(ProducerConfig.KEY_SERIALIZER_CLASS_CONFIG, KafkaConfigs.class.getName());
+		props.put(ProducerConfig.VALUE_SERIALIZER_CLASS_CONFIG, KafkaConfigs.class.getName());*/
+		props.put(ProducerConfig.KEY_SERIALIZER_CLASS_CONFIG, StringSerializer.class);
+		props.put(ProducerConfig.VALUE_SERIALIZER_CLASS_CONFIG, StringSerializer.class);
 
 		KafkaProducer<Integer, String> producer = new KafkaProducer<>(props);
 
