@@ -2,6 +2,7 @@ package com.td.notification_serivce.service.impl;
 
 import com.td.notification_serivce.dto.UserDTO;
 import com.td.notification_serivce.entity.UserEntity;
+import com.td.notification_serivce.exception.ResourceNotFoundException;
 import com.td.notification_serivce.mapper.UserMapper;
 import com.td.notification_serivce.repository.UserRepository;
 import com.td.notification_serivce.service.UserService;
@@ -32,7 +33,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public UserDTO updateUser(UserDTO userDTO) {
-        UserEntity existingUserEntity = userRepository.findById(userDTO.getId()).orElse(null);
+        UserEntity existingUserEntity = userRepository.findById(userDTO.getId()).orElseThrow(() -> new ResourceNotFoundException("User","id",userDTO.getId()));
         if (existingUserEntity != null) {
             existingUserEntity = UserMapper.toEntity(userDTO);
             UserEntity savedUser = userRepository.save(existingUserEntity);
@@ -45,6 +46,9 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public void deleteUser(Long id) {
+
+        UserEntity existingUserEntity = userRepository.findById(id)
+                .orElseThrow(() -> new ResourceNotFoundException("User","id",id));
         userRepository.deleteById(id);
 
 
