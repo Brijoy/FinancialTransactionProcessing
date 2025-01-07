@@ -14,8 +14,23 @@ public class AttemptRecordsController {
     private AttemptRecordsService attemptRecordsService;
 
     @PostMapping(value = "/create")
-    public AttemptRecordsDTO createAttemptRecord(@RequestBody AttemptRecordsDTO dto) {
-        return attemptRecordsService.saveAttemptRecord(dto);
+    public void createAttemptRecord(@RequestBody AttemptRecordsDTO dto) {
+        AttemptRecordsDTO attemptRecordsDTO = attemptRecordsService.getAttemptRecordById(dto.getTransactionId());
+        if (attemptRecordsDTO != null) {
+            attemptRecordsDTO.setAttemptsCount(dto.getAttemptsCount());
+            attemptRecordsDTO.setCvvAttempts(dto.getCvvAttempts());
+            attemptRecordsDTO.setOtpAttempts(dto.getOtpAttempts());
+            attemptRecordsDTO.setOtp(dto.getOtp());
+            attemptRecordsDTO.setStatus(dto.getStatus());
+            attemptRecordsDTO.setUserId(dto.getUserId());
+            attemptRecordsDTO.setTransactionId(dto.getTransactionId());
+            attemptRecordsDTO.setTimestamp(dto.getTimestamp());
+            attemptRecordsDTO.setId(dto.getId());
+            attemptRecordsDTO.setCvv(dto.getCvv());
+            attemptRecordsService.saveAttemptRecord(attemptRecordsDTO);
+        } else {
+            attemptRecordsService.saveAttemptRecord(dto);
+        }
     }
 
     @GetMapping("/{id}")

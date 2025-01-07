@@ -14,7 +14,7 @@ import services.FraudDetectionService;
 @RestController
 @RequestMapping("api/fraud-detection")
 public class FraudDetectionController {
- private static Logger LOG = LoggerFactory.getLogger(FraudDetectionController.class);
+    private static Logger LOG = LoggerFactory.getLogger(FraudDetectionController.class);
 
     @Autowired
     FraudDetectionService fraudDetectionService;
@@ -26,12 +26,12 @@ public class FraudDetectionController {
     public String checkFraud(@RequestBody FraudDetectionEntity fraudAttempt, Long transactionId) throws Exception {
         AttemptRecordsDTO attemptRecords = attemptRecordsService.getAttemptRecordById(transactionId);
         LOG.info("Enter in fraud check method");
-            if (attemptRecords.getAttemptsCount() > 3) {
-                createFraudAttempt(fraudAttempt);
-                throw new FraudDetectionException("Fraud Detected");
-            } else {
-                return "Check Passed, Fraud check completed";
-            }
+        if (attemptRecords.getAttemptsCount() > 3) {
+            createFraudAttempt(fraudAttempt);
+            throw new FraudDetectionException("Fraud Detected");
+        } else {
+            return "Check Passed, Fraud check completed";
+        }
     }
 
     public void createFraudAttempt(FraudDetectionEntity fraudAttempt) throws Exception {
