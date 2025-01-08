@@ -9,9 +9,9 @@
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>com.td</groupId>
-	<artifactId>notification-serivce</artifactId>
+	<artifactId>notification-service</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>NotificationSerivce</name>
+	<name>NotificationService</name>
 	<description>Notification Service project for Spring Boot</description>
 	<url/>
 	<licenses>
@@ -92,6 +92,18 @@
 			<version>2.11.0</version>
 		</dependency>
 
+		<dependency>
+			<groupId>commons-lang</groupId>
+			<artifactId>commons-lang</artifactId>
+			<version>2.6</version>
+		</dependency>
+
+		<dependency>
+			<groupId>com.fasterxml.jackson.core</groupId>
+			<artifactId>jackson-databind</artifactId>
+			<version>2.18.1</version>
+		</dependency>
+
 
 	</dependencies>
 
@@ -126,6 +138,27 @@
 					</excludes>-->
 				</configuration>
 			</plugin>
+			<plugin>
+				<groupId>org.jsonschema2pojo</groupId>
+				<artifactId>jsonschema2pojo-maven-plugin</artifactId>
+				<version>1.1.1</version>
+				<executions>
+					<execution>
+						<goals>
+							<goal>generate</goal>
+						</goals>
+						<configuration>
+							<sourceDirectory>${project.basedir}/src/main/resources/schema</sourceDirectory>
+							<outputDirectory>${project.basedir}/src/main/java</outputDirectory>
+							<includeAdditionalProperties>false</includeAdditionalProperties>
+							<includeHashcodeAndEquals>false</includeHashcodeAndEquals>
+							<targetPackage>com.td.notification_service.models</targetPackage>
+							<usePrimitives>true</usePrimitives>
+						</configuration>
+					</execution>
+				</executions>
+			</plugin>
+
 		</plugins>
 	</build>
 

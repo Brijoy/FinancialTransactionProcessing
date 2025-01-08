@@ -1,0 +1,9 @@
+{
+  "type": "object",
+  "javaType": "com.td.notification_service.kafka.types.FraudTransactionData",
+  "properties": {
+    "TransactionId" : {"type": "string"},
+    "TransactionAmount": {"type": "number"},
+    "RecipientEmail": {"type":  "String"}
+  }
+}
