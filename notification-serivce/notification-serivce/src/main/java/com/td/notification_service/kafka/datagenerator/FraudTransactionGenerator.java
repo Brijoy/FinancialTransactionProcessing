@@ -1,7 +1,6 @@
 package com.td.notification_service.kafka.datagenerator;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.td.notification_service.kafka.types.FraudTransactionData;
 
 import java.io.File;
 import java.util.Random;
