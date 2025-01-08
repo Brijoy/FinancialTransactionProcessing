@@ -4,6 +4,6 @@
   "properties": {
     "TransactionId" : {"type": "string"},
     "TransactionAmount": {"type": "number"},
-    "RecipientEmail": {"type":  "String"}
+    "RecipientEmail": {"type":  "string"}
   }
 }
