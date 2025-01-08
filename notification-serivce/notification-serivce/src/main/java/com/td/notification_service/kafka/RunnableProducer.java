@@ -23,6 +23,7 @@ public class RunnableProducer implements Runnable{
     public RunnableProducer(int id, KafkaProducer<String, FraudTransactionData> producer,String topicName ,int produceSpeed) {
         this.id = id;
         this.producer = producer;
+        this.topicName = topicName;
         this.produceSpeed = produceSpeed;
         this.fraudTransactionGenerator = FraudTransactionGenerator.getInstance();
 
@@ -34,7 +35,13 @@ public class RunnableProducer implements Runnable{
             logger.info("Starting producer thread - " + id);
             while (!stopper.get()) {
                 FraudTransactionData fraudTransactionData = fraudTransactionGenerator.getNextFraudTransactionData();
-                producer.send(new ProducerRecord<>(topicName, fraudTransactionData.getTransactionId(), fraudTransactionData));
+
+                /*ProducerRecord<String, String> record = new ProducerRecord<>(topicName, fraudTransactionData.getTransactionId(), fraudTransactionData);*/
+                producer.send(new ProducerRecord<>
+                        (topicName,
+                                fraudTransactionData.getTransactionId(),
+                                fraudTransactionData));
+                logger.info("producer");
                 Thread.sleep(produceSpeed);
             }
         }
