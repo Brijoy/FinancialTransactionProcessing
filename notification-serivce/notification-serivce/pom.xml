@@ -152,8 +152,7 @@
 							<outputDirectory>${project.basedir}/src/main/java</outputDirectory>
 							<includeAdditionalProperties>false</includeAdditionalProperties>
 							<includeHashcodeAndEquals>false</includeHashcodeAndEquals>
-							<targetPackage>com.td.notification_service.models</targetPackage>
-							<usePrimitives>true</usePrimitives>
+
 						</configuration>
 					</execution>
 				</executions>

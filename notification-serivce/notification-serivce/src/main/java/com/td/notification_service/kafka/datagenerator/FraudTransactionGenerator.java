@@ -30,8 +30,11 @@ public class FraudTransactionGenerator {
         random = new Random();
         mapper = new ObjectMapper();
         try{
-            fraudTransactionData = mapper.readValue(new File(classLoader.getResource("data/fraudtransactiondata.json").getFile()), FraudTransactionData[].class);
-            //fraudTransactionData = mapper.readValue(new File(DATAFILE), FraudTransactionData[].class);
+            fraudTransactionData = mapper.readValue(
+                    new File(classLoader.getResource
+                            ("data/fraudtransactiondata.json").getFile()),
+                    FraudTransactionData[].class);
+           //fraudTransactionData = mapper.readValue(new File(DATAFILE), FraudTransactionData[].class);
            /* fraudTransactionData = mapper.readValue(file, FraudTransactionData[].class);*/
         }catch(Exception e){
             throw new RuntimeException(e);

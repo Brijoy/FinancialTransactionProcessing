@@ -5,7 +5,7 @@ public class KafkaConfigs {
         public final static String bootstrapServers = "localhost:9092,localhost:9093";
         public final static String topicName = "fraud-detection";
         public final static int numEvents = 500000;
-        public final static int noOfProducers = 100;
+        public final static int noOfProducers = 5;
         public final static int producerSpeed = 2;
 
 }
