@@ -12,34 +12,31 @@ import java.util.Map;
 public class JsonSerializer<T> implements Serializer<T> {
     private final ObjectMapper objectMapper = new ObjectMapper();
 
-    public JsonSerializer(){}
+    public JsonSerializer() {
 
+    }
 
     @Override
-    public void configure(Map<String, ?> configs, boolean isKey) {
-        Serializer.super.configure(configs, isKey);
+    public void configure(Map<String, ?> config, boolean isKey) {
+        //Nothing to Configure
     }
+
 
     @Override
     public byte[] serialize(String topic, T data) {
-        if(data == null){
+        if (data == null) {
             return null;
         }
-        try{
+        try {
             return objectMapper.writeValueAsBytes(data);
-        }catch(Exception e){
-            throw new SerializationException("Error serializing JSON message",e);
+        } catch (Exception e) {
+            throw new SerializationException("Error serializing JSON message", e);
         }
-
-    }
-
-    @Override
-    public byte[] serialize(String topic, Headers headers, T data) {
-        return Serializer.super.serialize(topic, headers, data);
     }
 
     @Override
     public void close() {
-        Serializer.super.close();
+
     }
 }
+
