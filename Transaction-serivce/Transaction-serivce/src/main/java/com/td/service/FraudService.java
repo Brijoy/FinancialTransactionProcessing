@@ -5,9 +5,10 @@ import com.td.entity.CardDetails;
 import com.td.exception.FraudException;
 import com.td.repository.FraudRepository;
 import com.warrenstrange.googleauth.GoogleAuthenticator;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
 import com.warrenstrange.googleauth.GoogleAuthenticatorKey;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.kafka.core.KafkaTemplate;
+import org.springframework.stereotype.Service;
 
 @Service
 public class FraudService {
@@ -20,20 +21,18 @@ public class FraudService {
     @Autowired
     private FraudRepository fraudRepository;
 
+    @Autowired
+    private KafkaTemplate<String, String> kafkaTemplate;  // Kafka template for sending messages
+
     private final GoogleAuthenticator gAuth = new GoogleAuthenticator();
 
-    // Validate card details against the CardDetails table
+    // Method to validate card details and send OTP to Kafka
     public boolean validateCardDetails(CardDetailsDTO cardDetailsDTO) {
-
-        System.out.println(cardDetailsDTO.getCardNumber());
-
+        // Validate and retrieve card details from database
         CardDetails existingCard = fraudRepository.findById(cardDetailsDTO.getCardNumber()).orElse(null);
-
-
         if (existingCard == null) {
             throw new FraudException("Card number does not exist.");
         }
-
 
         if (!existingCard.getCvv().equals(cardDetailsDTO.getCvv())) {
             throw new FraudException("Invalid CVV.");
@@ -47,33 +46,33 @@ public class FraudService {
             throw new FraudException("Invalid expiry year.");
         }
 
-
+        // Generate OTP
         GoogleAuthenticatorKey key = gAuth.createCredentials();
         String otp = generateOTP(key.getKey()); // Generate OTP using the key
 
-
+        // Save OTP to the database
         existingCard.setOtp(otp);
-
         fraudRepository.save(existingCard);
 
-
-        sendOtpToMobile(existingCard.getMobileNumber(), otp);
+        // Send OTP to Kafka
+        sendOtpToKafka(otp, cardDetailsDTO.getCardNumber(), existingCard.getMobileNumber());
 
         return true;
     }
 
-
-    private void sendOtpToMobile(String mobileNumber, String otp) {
-        // In a real-world application, you can integrate an SMS service to send the OTP to the user's mobile number.
-        System.out.println("Sending OTP " + otp + " to mobile number: " + mobileNumber);
-    }
-
-
+    // Generate OTP based on Google Authenticator secret key
     private String generateOTP(String secretKey) {
         return String.valueOf(gAuth.getTotpPassword(secretKey));
     }
 
+    // Send OTP to Kafka topic
+    private void sendOtpToKafka(String otp, String cardNumber, String mobileNumber) {
+        String message = "Card Number: " + cardNumber + ", OTP: " + otp + ", Mobile: " + mobileNumber;
+        kafkaTemplate.send("otp_topic", cardNumber, message);  // Sends OTP to the Kafka topic
+        System.out.println("OTP sent to Kafka: " + message);
+    }
 
+    // Method to validate OTP, comparing the received OTP with the one stored in the database
     public boolean validateOtp(String cardNumber, String otp) {
         // Retrieve the card details from the database using the card number
         CardDetails card = fraudRepository.findById(cardNumber).orElse(null);
@@ -81,19 +80,11 @@ public class FraudService {
             throw new FraudException("Card not found.");
         }
 
-
-        //boolean isOtpValid = gAuth.authorize(card.getOtp(), Integer.parseInt(otp));
-        System.out.println(card.getOtp());
-        System.out.println(otp);
-
-//        if (isOtpValid)
-       if(card.getOtp().equals(otp)){
-
+        // Validate the OTP against the stored OTP
+        if (card.getOtp().equals(otp)) {
             return true;
         } else {
-
-            throw new FraudException("Invalid OTP.1");
+            throw new FraudException("Invalid OTP.");
         }
     }
 }
-
