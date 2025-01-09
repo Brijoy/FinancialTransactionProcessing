@@ -12,19 +12,21 @@ public class CardDetailsDTO {
 
 
     @NotNull
-    //@Pattern(regexp = "^[0-9]{16}$", message = "Invalid card number")
+
+
     private String cardNumber;
 
     @NotNull
-    //@Pattern(regexp = "^[0-9]{3}$", message = "Invalid CVV")
+
     private String cvv;
 
     @NotNull
-    //@Pattern(regexp = "^(0[1-9]|1[0-2])$", message = "Invalid expiry month")
+
     private String expiryMonth;
 
     @NotNull
-   // @Pattern(regexp = "^[2-9][0-9]{3}$", message = "Invalid expiry year")
+
+
     private String expiryYear;
 
     private String mobileNumber;

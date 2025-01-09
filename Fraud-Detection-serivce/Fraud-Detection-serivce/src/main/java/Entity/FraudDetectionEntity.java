@@ -20,17 +20,17 @@ public class FraudDetectionEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long fraudAttemptId;
 
-//    @ManyToOne
-//    @JoinColumn(name = "user_id", nullable = false)
-////    private User user;
+    @ManyToOne
+    @JoinColumn(name = "user_id", nullable = false)
+    private UserEntity user;
 
-//    @ManyToOne
-//    @JoinColumn(name = "transaction_id", nullable = false)
-//    private FinancialTransaction financialTransaction;
-//
-//    @ManyToOne
-//    @JoinColumn(name = "notification_template_id", nullable = false)
-//    private NotificationTemplate notificationTemplate;
+    @ManyToOne
+    @JoinColumn(name = "transaction_id", nullable = false)
+    private FinancialTransactionEntity financialTransaction;
+
+    @ManyToOne
+    @JoinColumn(name = "notification_template_id", nullable = false)
+    private NotificationTemplateEntity notificationTemplate;
 
     private String status;
     private int attempt;
