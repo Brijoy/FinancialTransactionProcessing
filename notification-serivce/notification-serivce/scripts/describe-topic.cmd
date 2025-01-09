@@ -1,1 +1,1 @@
-%KAFKA_HOME%\bin\windows\kafka-topics.bat --describe --bootstrap-server localhost:9092 --topic fraud-detection
+%KAFKA_HOME%\bin\windows\kafka-topics.bat --describe --bootstrap-server localhost:9092 9093 --topic frauddetection

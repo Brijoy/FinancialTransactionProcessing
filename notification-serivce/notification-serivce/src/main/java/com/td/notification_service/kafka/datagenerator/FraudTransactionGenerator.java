@@ -16,10 +16,9 @@ public class FraudTransactionGenerator {
     private static final Logger logger = LogManager.getLogger();
     private static final FraudTransactionGenerator ourInstance = new FraudTransactionGenerator();
     private final Random random;
-    ClassLoader classLoader = getClass().getClassLoader();
-   /* File file = new File(classLoader.getResource("data/fraudtransactiondata.json").getFile());
+    /*ClassLoader classLoader = getClass().getClassLoader();
+    File file = new File(classLoader.getResource("data/fraudtransactiondata.json").getFile());
 */
-
     private List<FraudTransactionData> fraudTransactionData;
 
 
@@ -53,7 +52,7 @@ public class FraudTransactionGenerator {
 
     public FraudTransactionData getNextFraudTransactionData() {
 
-            logger.info(fraudTransactionData.size());
+
             int index = random.nextInt(fraudTransactionData.size());
             FraudTransactionData data = fraudTransactionData.get(index);
             logger.info(data);
