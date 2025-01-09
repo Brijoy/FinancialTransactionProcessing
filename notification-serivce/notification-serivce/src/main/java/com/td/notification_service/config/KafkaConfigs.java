@@ -11,4 +11,6 @@ public class KafkaConfigs {
         public final static String topicName1 = "transaction";
         public final static String[] eventFiles = {"notification-serivce/notification-serivce/data/NSE05NOV2018BHAV.csv","notification-serivce/notification-serivce/data/NSE06NOV2018BHAV.csv"};
 
+        public final static String groupID = "TransactionGroup";
+
 }
